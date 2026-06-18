@@ -1,7 +1,7 @@
 ﻿public class Produto
 {
     public int Codigo;
-    public string Descricao;
+    public string Descricao = "";
     public decimal PrecoCompra;
     public decimal PrecoVenda;
     public int Estoque;
