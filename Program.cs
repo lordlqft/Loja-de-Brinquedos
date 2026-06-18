@@ -177,10 +177,10 @@ class Program
             Console.Write("Quantidade recebida: ");
             int quantidadeEntrada = int.Parse(Console.ReadLine()!);
 
-            Console.Write("Quantidade recebida: ");
+            Console.Write("Novo preço de compra: ");
             decimal precoCompra = decimal.Parse(Console.ReadLine()!);
 
-            Console.Write("Quantidade recebida: ");
+            Console.Write("Novo preço de venda: ");
             decimal precoVenda = decimal.Parse(Console.ReadLine()!);
 
             produtos[posicao].Estoque += quantidadeEntrada;
