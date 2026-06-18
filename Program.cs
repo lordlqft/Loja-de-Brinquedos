@@ -107,27 +107,42 @@ class Program
 
     static void FrenteDeCaixa()
     {
+        decimal totalCompra = 0;
+        int codigo;
 
+        do
+        {
+            Console.Write("Digite o código do produto (0 para finalizar): ");
+            codigo = int.Parse(Console.ReadLine()!);
+
+            if (codigo == 0)
+            {
+                break;
+            }
+
+            int posicao = BuscarProduto(codigo);
+            if (posicao == -1)
+            {
+                Console.WriteLine("Produto não encontrado. Tente novamente.");
+            }
+            else
+            {
+                if (produtos[posicao].Estoque <= 0)
+                {
+                    Console.WriteLine("Produto sem estoque disponível.");
+
+                }
+                else
+                {
+                    totalCompra += produtos[posicao].PrecoVenda;
+                    produtos[posicao].Estoque--;
+                    Console.WriteLine($"Produto '{produtos[posicao].Descricao}' adicionado ao carrinho. Preço: {produtos[posicao].PrecoVenda:C}");
+                }
+            }
+        } while (codigo != 0);
+
+        Console.WriteLine($"Total da compra: {totalCompra:C}");
     }
-
-    /*
-    * Responsável por consultar as informações de um produto
-    * cadastrado no sistema.
-    *
-    * A função deve:
-    * - Solicitar ao usuário o código do produto desejado;
-    * - Verificar se o código informado existe (BuscarProduto);
-    * - Localizar o produto correspondente;
-    * - Exibir todas as informações do produto encontrado:
-    *   - Código;
-    *   - Descrição;
-    *   - Preço de compra;
-    *   - Preço de venda;
-    *   - Quantidade em estoque.
-    *
-    * Caso o código informado não exista, uma mensagem de erro
-    * deve ser exibida ao usuário.
-    */
     static void ConsultarEstoque()
     {
 
