@@ -1,6 +1,4 @@
-﻿using System;
-
-public class Produto
+﻿public class Produto
 {
     public int Codigo;
     public string Descricao;
@@ -32,7 +30,8 @@ class Program
             Console.WriteLine("5 - Listagem de Produtos");
             Console.WriteLine("6 - Sair");
             Console.WriteLine("=================================\t");
-            opcao = int.Parse(Console.ReadLine("Digite uma opção: "));
+            Console.Write("Escolha uma opção: ");
+            opcao = int.Parse(Console.ReadLine()!);
 
             switch (opcao)
             {
@@ -88,16 +87,16 @@ class Program
         proximoCodigo++;
 
         Console.Write("Descrição: ");
-        produto.Descricao = decimal.Parse(Console.ReadLine());
+        produto.Descricao = Console.ReadLine()!;
 
         Console.Write("Preço de compra: ");
-        produto.PrecoCompra = decimal.Parse(Console.ReadLine());
+        produto.PrecoCompra = decimal.Parse(Console.ReadLine()!);
 
         Console.Write("Preço de venda: ");
-        produto.PrecoVenda = decimal.Parse(Console.ReadLine());
+        produto.PrecoVenda = decimal.Parse(Console.ReadLine()!);
 
         Console.Write("Quantidade em estoque: ");
-        produto.Estoque = int.Parse(Console.ReadLine());
+        produto.Estoque = int.Parse(Console.ReadLine()!);
 
         produtos[quantidadeProdutos] = produto;
         quantidadeProdutos++;
@@ -145,48 +144,69 @@ class Program
     }
     static void ConsultarEstoque()
     {
+        Console.Write("Digite o código do produto para consultar o estoque: ");
+        int codigo = int.Parse(Console.ReadLine()!);
 
+        int posicao = BuscarProduto(codigo);
+        if (posicao == -1)
+        {
+            Console.WriteLine("Código inexistente.");
+        }
+        else
+        {
+            Console.WriteLine($"Código: {produtos[posicao].Codigo}");
+            Console.WriteLine($"Descrição: {produtos[posicao].Descricao}");
+            Console.WriteLine($"Preço de compra: {produtos[posicao].PrecoCompra:C}");
+            Console.WriteLine($"Preço de venda: {produtos[posicao].PrecoVenda:C}");
+            Console.WriteLine($"Quantidade em estoque: {produtos[posicao].Estoque}");
+        }
     }
-
-    /*
-    * Responsável por registrar a entrada de novos produtos
-    * no estoque da loja.
-    *
-    * A função deve:
-    * - Solicitar ao usuário o código do produto que será atualizado;
-    * - Verificar se o código informado existe (BuscarProduto);
-    * - Solicitar a quantidade de itens recebidos;
-    * - Solicitar o novo preço de compra do produto;
-    * - Solicitar o novo preço de venda do produto;
-    * - Atualizar a quantidade disponível em estoque;
-    * - Atualizar os preços de compra e venda do produto.
-    *
-    * Caso o código informado não exista, uma mensagem de erro
-    * deve ser exibida ao usuário.
-    */
     static void EntradaProdutos()
     {
+        Console.Write("Informe o código do produto: ");
+        int codigo = int.Parse(Console.ReadLine()!);
 
+        int posicao = BuscarProduto(codigo);
+
+        if (posicao == -1)
+        {
+            Console.WriteLine("Código inexistente.");
+        }
+        else
+        {
+            Console.Write("Quantidade recebida: ");
+            int quantidadeEntrada = int.Parse(Console.ReadLine()!);
+
+            Console.Write("Quantidade recebida: ");
+            decimal precoCompra = decimal.Parse(Console.ReadLine()!);
+
+            Console.Write("Quantidade recebida: ");
+            decimal precoVenda = decimal.Parse(Console.ReadLine()!);
+
+            produtos[posicao].Estoque += quantidadeEntrada;
+            produtos[posicao].PrecoCompra = precoCompra;
+            produtos[posicao].PrecoVenda = precoVenda;
+
+            Console.WriteLine($"Estoque atualizado\tNova quantidade em estoque: {produtos[posicao].Estoque}");
+        }
     }
-
-    /*
-    * Responsável por exibir todos os produtos cadastrados no sistema.
-    *
-    * A função deve:
-    * - Verificar se existe ao menos um produto cadastrado;
-    * - Percorrer a estrutura que armazena os produtos;
-    * - Exibir as informações de cada produto:
-    *   - Código;
-    *   - Descrição;
-    *   - Preço de compra;
-    *   - Preço de venda;
-    *   - Quantidade em estoque.
-    *
-    * Caso não existam produtos cadastrados, uma mensagem
-    * informando essa situação deve ser exibida ao usuário.
-    */
     static void ListarProdutos()
     {
-
+        if (quantidadeProdutos == 0)
+        {
+            Console.WriteLine("Nenhum produto cadastrado.");
+        }
+        else
+        {
+            for (int i = 0; i < quantidadeProdutos; i++)
+            {
+                Console.WriteLine($"Código: {produtos[i].Codigo}");
+                Console.WriteLine($"Descrição: {produtos[i].Descricao}");
+                Console.WriteLine($"Preço de compra: {produtos[i].PrecoCompra:C}");
+                Console.WriteLine($"Preço de venda: {produtos[i].PrecoVenda:C}");
+                Console.WriteLine($"Quantidade em estoque: {produtos[i].Estoque}");
+                Console.WriteLine();
+            }
+        }
     }
 }
